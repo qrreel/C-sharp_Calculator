@@ -29,7 +29,7 @@ namespace Calculator
             {
                 while (!isOver)
                 {
-                    Console.Write("select action: ");
+                    Console.Write("Select action: ");
                     string action = Console.ReadLine();
                     if (action == "=") break;
                     Console.Write("Enter number: ");
@@ -41,7 +41,7 @@ namespace Calculator
                         case "-": result -= number; break;
                         case "*": result *= number; break;
                         case "/": result /= number; break;
-                        default: Console.WriteLine("Unknown operation"); break;
+                        default: Console.WriteLine("Unknown operation. Try again"); break;
                     }
                     Console.WriteLine($"Current result: {Convert.ToDecimal(result)}");
                 }
