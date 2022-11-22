@@ -1,11 +1,12 @@
-﻿using System;
+using System;
+using System.Linq.Expressions;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Calculator
 {
     internal class Program
     {
-        public static void Main()
+        static void Main()
         {
             Console.WriteLine("Select action to be performed:");
             Console.WriteLine("Press '+' for Addition");
@@ -14,75 +15,43 @@ namespace Calculator
             Console.WriteLine("Press '/' for Division");
             Console.WriteLine("Press '=' for Result\n");
 
+            Go();
+        }
+
+        static void Go()
+        {
+            bool isOver = false;
+
             Console.Write("Enter number: ");
             float result = Convert.ToInt32(Console.ReadLine());
 
-            NewAction(result);
-        }
-
-        public static float Actions(float result, float num, string action)
-        {
-            if (action == "+")
+            try
             {
-                result += num;
-                CurrentResult(result);
-            }
-            else if (action == "-")
-            {
-                result -= num;
-                CurrentResult(result);
-            }
-            else if (action == "*")
-            {
-                result *= num;
-                CurrentResult(result);
-            }
-            else if (action == "/")
-            {
-                if (num != 0)
+                while (!isOver)
                 {
-                    result /= num;
-                    CurrentResult(result);
+                    Console.Write("select action: ");
+                    string action = Console.ReadLine();
+                    if (action == "=") break;
+                    Console.Write("Enter number: ");
+                    int number = Convert.ToInt32(Console.ReadLine());
+
+                    switch (action)
+                    {
+                        case "+": result += number; break;
+                        case "-": result -= number; break;
+                        case "*": result *= number; break;
+                        case "/": result /= number; break;
+                        default: Console.WriteLine("Unknown operation"); break;
+                    }
+                    Console.WriteLine($"Current result: {Convert.ToDecimal(result)}");
                 }
-                else
-                {
-                    Console.WriteLine("Go back to school...");
-                }
+                Console.WriteLine($"\nFinal result: {Convert.ToDecimal(result)}");
             }
-            else if (action == "=")
+            catch (Exception e)
             {
-                Console.WriteLine("\nFinal result: " + result);
+                Console.WriteLine("{0} Exception caught.", e.Message);
+                isOver = true;
             }
-            else
-            {
-                Console.WriteLine("Wrong action! You're out!");
-            }
-
-            return result;
-        }
-
-        public static void NewAction(float result)
-        {
-            Console.Write("Select action: ");
-            string action = Console.ReadLine();
-
-            if (action != "=")
-            {
-                Console.Write("Enter number: ");
-                float num = Convert.ToInt32(Console.ReadLine());
-                Actions(result, num, action);
-            }
-            else
-            {
-                Actions(result, 0, action);
-            }
-
-        }
-
-        private static void CurrentResult(float result)
-        {
-            Console.WriteLine("Current result: " + result);
-            NewAction(result);
         }
     }
 }
